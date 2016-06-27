@@ -25,6 +25,7 @@ import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
+import org.mybatis.generator.api.dom.java.TopLevelClass;
 
 /**
  * 
@@ -101,7 +102,84 @@ public class SelectByPrimaryKeyMethodGenerator extends
         }
     }
 
+    @Override
+    public void addClassElements(TopLevelClass topLevelClass) {
+        Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
+        Method method = new Method();
+        method.setVisibility(JavaVisibility.PUBLIC);
+
+        FullyQualifiedJavaType returnType = introspectedTable.getRules()
+                .calculateAllFieldsClass();
+        method.setReturnType(returnType);
+        importedTypes.add(returnType);
+
+        method.setName(introspectedTable.getSelectByPrimaryKeyStatementId());
+        
+        StringBuilder methodBody=new StringBuilder();
+        methodBody.append("return getReadSqlSession().selectOne(namespace+\"");
+        methodBody.append(introspectedTable.getSelectByPrimaryKeyStatementId());
+        methodBody.append("\",");        
+
+        if (!isSimple && introspectedTable.getRules().generatePrimaryKeyClass()) {
+            FullyQualifiedJavaType type = new FullyQualifiedJavaType(
+                    introspectedTable.getPrimaryKeyType());
+            importedTypes.add(type);
+            method.addParameter(new Parameter(type, "key")); //$NON-NLS-1$
+        } else {
+            // no primary key class - fields are in the base class
+            // if more than one PK field, then we need to annotate the
+            // parameters
+            // for MyBatis3
+            List<IntrospectedColumn> introspectedColumns = introspectedTable
+                    .getPrimaryKeyColumns();
+            boolean annotate = introspectedColumns.size() > 1;
+            if (annotate) {
+                importedTypes.add(new FullyQualifiedJavaType(
+                        "org.apache.ibatis.annotations.Param")); //$NON-NLS-1$
+            }
+            StringBuilder sb = new StringBuilder();
+            StringBuilder methodParams = new StringBuilder();
+            for (IntrospectedColumn introspectedColumn : introspectedColumns) {
+                FullyQualifiedJavaType type = introspectedColumn
+                        .getFullyQualifiedJavaType();
+                importedTypes.add(type);
+                Parameter parameter = new Parameter(type, introspectedColumn
+                        .getJavaProperty());
+                if (annotate) {
+                    sb.setLength(0);
+                    sb.append("@Param(\""); //$NON-NLS-1$
+                    sb.append(introspectedColumn.getJavaProperty());
+                    sb.append("\")"); //$NON-NLS-1$
+                    parameter.addAnnotation(sb.toString());
+                }
+                method.addParameter(parameter);
+                methodParams.append(parameter.getName()).append(",");
+            }
+            methodBody.append(methodParams.substring(0, methodParams.length()-1));
+        }
+        
+        methodBody.append(");");
+        method.addBodyLine(methodBody.toString());
+        
+        addMapperAnnotations(topLevelClass, method);
+
+        context.getCommentGenerator().addGeneralMethodComment(method,
+                introspectedTable);
+
+        if (context.getPlugins().clientSelectByPrimaryKeyMethodGenerated(
+                method, topLevelClass, introspectedTable)) {
+        	topLevelClass.addImportedTypes(importedTypes);
+        	topLevelClass.addMethod(method);
+        }
+    }
+
+    
     public void addMapperAnnotations(Interface interfaze, Method method) {
         return;
     }
+    
+    public void addMapperAnnotations(TopLevelClass topLevelClass, Method method) {
+        return;
+    }
+    
 }

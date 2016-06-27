@@ -30,6 +30,10 @@ import org.mybatis.generator.api.dom.OutputUtilities;
  * @author Jeff Butler
  */
 public class InnerClass extends JavaElement {
+	
+	private String readSqlSessionName;
+	
+	private String writeSqlSessionName;
     
     /** The fields. */
     private List<Field> fields;
@@ -57,6 +61,8 @@ public class InnerClass extends JavaElement {
     
     /** The initialization blocks. */
     private List<InitializationBlock> initializationBlocks;
+    
+    private Boolean isMapper=false;
 
     /**
      * Instantiates a new inner class.
@@ -203,6 +209,12 @@ public class InnerClass extends JavaElement {
 
         addFormattedJavadoc(sb, indentLevel);
         addFormattedAnnotations(sb, indentLevel);
+        
+        if(isMapper){
+        	OutputUtilities.newLine(sb);
+        	sb.append("@Repository");
+        	OutputUtilities.newLine(sb);
+        }
 
         OutputUtilities.javaIndent(sb, indentLevel);
         sb.append(getVisibility().getValue());
@@ -253,6 +265,36 @@ public class InnerClass extends JavaElement {
             if (fldIter.hasNext()) {
                 OutputUtilities.newLine(sb);
             }
+        }
+        
+        if(isMapper){
+        	OutputUtilities.newLine(sb);
+        	sb.append("\t@Autowired");
+        	OutputUtilities.newLine(sb);
+        	sb.append("\tprivate  SqlSessionTemplate ").append(readSqlSessionName).append(";");
+        	OutputUtilities.newLine(sb);
+        	OutputUtilities.newLine(sb);
+	        sb.append("\t@Autowired");
+	        OutputUtilities.newLine(sb);
+	        sb.append("\tprivate  SqlSessionTemplate ").append(writeSqlSessionName).append(";");
+	        OutputUtilities.newLine(sb);
+	        OutputUtilities.newLine(sb);
+	        sb.append("\tprivate final String namespace=\"").append(getType().getFullyQualifiedName()).append(".\";");
+	        OutputUtilities.newLine(sb);
+	        OutputUtilities.newLine(sb);
+	        sb.append("\tpublic SqlSessionTemplate getReadSqlSession() {");
+	        OutputUtilities.newLine(sb);
+	        sb.append("\t\treturn ").append(readSqlSessionName).append(";");
+	        OutputUtilities.newLine(sb);
+	        sb.append("\t}");
+	        OutputUtilities.newLine(sb);
+	        OutputUtilities.newLine(sb);
+	        sb.append("\tpublic SqlSessionTemplate getWriteSqlSession() {");
+	        OutputUtilities.newLine(sb);
+	        sb.append("\t\treturn ").append(writeSqlSessionName).append(";");
+	        OutputUtilities.newLine(sb);
+	        sb.append("\t}");
+	        OutputUtilities.newLine(sb);
         }
 
         if (initializationBlocks.size() > 0) {
@@ -383,4 +425,29 @@ public class InnerClass extends JavaElement {
     public void setAbstract(boolean isAbtract) {
         this.isAbstract = isAbtract;
     }
+    
+    public Boolean getIsMapper() {
+		return isMapper;
+	}
+
+	public void setIsMapper(Boolean isMapper) {
+		this.isMapper = isMapper;
+	}
+
+	public String getReadSqlSessionName() {
+		return readSqlSessionName;
+	}
+
+	public String getWriteSqlSessionName() {
+		return writeSqlSessionName;
+	}
+
+	public void setReadSqlSessionName(String readSqlSessionName) {
+		this.readSqlSessionName = readSqlSessionName;
+	}
+
+	public void setWriteSqlSessionName(String writeSqlSessionName) {
+		this.writeSqlSessionName = writeSqlSessionName;
+	}
+    
 }

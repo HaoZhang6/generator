@@ -23,6 +23,7 @@ import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
+import org.mybatis.generator.api.dom.java.TopLevelClass;
 
 /**
  * 
@@ -62,8 +63,42 @@ public class InsertSelectiveMethodGenerator extends
             interfaze.addMethod(method);
         }
     }
+    
+    @Override
+    public void addClassElements(TopLevelClass topLevelClass) {
+        Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
+        Method method = new Method();
+
+        method.setReturnType(FullyQualifiedJavaType.getIntInstance());
+        method.setVisibility(JavaVisibility.PUBLIC);
+        method.setName(introspectedTable.getInsertSelectiveStatementId());
+        
+        method.addBodyLine("return getWriteSqlSession().insert(namespace+\""+introspectedTable.getInsertSelectiveStatementId()+"\",record);");
+
+        FullyQualifiedJavaType parameterType = introspectedTable.getRules()
+                .calculateAllFieldsClass();
+
+        importedTypes.add(parameterType);
+        method.addParameter(new Parameter(parameterType, "record")); //$NON-NLS-1$
+
+        context.getCommentGenerator().addGeneralMethodComment(method,
+                introspectedTable);
+
+        addMapperAnnotations(topLevelClass, method);
+        
+        if (context.getPlugins().clientInsertSelectiveMethodGenerated(
+                method, topLevelClass, introspectedTable)) {
+        	topLevelClass.addImportedTypes(importedTypes);
+        	topLevelClass.addMethod(method);
+        }
+    }
 
     public void addMapperAnnotations(Interface interfaze, Method method) {
         return;
     }
+    
+    public void addMapperAnnotations(TopLevelClass topLevelClass, Method method) {
+        return;
+    }
+    
 }

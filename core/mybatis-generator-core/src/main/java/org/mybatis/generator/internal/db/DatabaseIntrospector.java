@@ -27,6 +27,7 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -607,6 +608,7 @@ public class DatabaseIntrospector {
 
             introspectedColumn.setTableAlias(tc.getAlias());
             introspectedColumn.setJdbcType(rs.getInt("DATA_TYPE")); //$NON-NLS-1$
+            introspectedColumn.setDecimalDigits(rs.getInt("DECIMAL_DIGITS"));
             introspectedColumn.setLength(rs.getInt("COLUMN_SIZE")); //$NON-NLS-1$
             introspectedColumn.setActualColumnName(rs.getString("COLUMN_NAME")); //$NON-NLS-1$
             introspectedColumn
@@ -624,6 +626,17 @@ public class DatabaseIntrospector {
             if (columns == null) {
                 columns = new ArrayList<IntrospectedColumn>();
                 answer.put(atn, columns);
+            }
+            
+            introspectedColumn.setDbType(rs.getString("TYPE_NAME"));
+            introspectedColumn.setDecimalDigits(rs.getInt("DECIMAL_DIGITS"));
+            
+            if(introspectedColumn.getDbType().equals("NUMBER")){
+            	if(introspectedColumn.getDecimalDigits()<0){
+                	introspectedColumn.setJdbcType(Types.INTEGER);
+            	}else if(introspectedColumn.getDecimalDigits()>0){
+            		introspectedColumn.setJdbcType(Types.DOUBLE);
+            	}
             }
 
             columns.add(introspectedColumn);

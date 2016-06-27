@@ -23,6 +23,7 @@ import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
+import org.mybatis.generator.api.dom.java.TopLevelClass;
 
 /**
  * 
@@ -79,7 +80,68 @@ public class UpdateByExampleWithBLOBsMethodGenerator extends
         }
     }
     
+    @Override
+    public void addClassElements(TopLevelClass topLevelClass) {
+        Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
+        Method method = new Method();
+        method.setVisibility(JavaVisibility.PUBLIC);
+        method.setReturnType(FullyQualifiedJavaType.getIntInstance());
+        method.setName(introspectedTable
+                .getUpdateByExampleWithBLOBsStatementId());
+        
+        method.addBodyLine("Map<String,Object> params=new HashMap<String, Object>();");
+        method.addBodyLine("params.put(\"record\", record);");
+        method.addBodyLine("params.put(\"example\", example);");
+        method.addBodyLine("return getWriteSqlSession().update(namespace+\""+introspectedTable.getUpdateByExampleWithBLOBsStatementId()+"\",params);");
+
+        FullyQualifiedJavaType parameterType;
+        if (introspectedTable.getRules().generateRecordWithBLOBsClass()) {
+            parameterType = new FullyQualifiedJavaType(introspectedTable
+                    .getRecordWithBLOBsType());
+        } else {
+            parameterType = new FullyQualifiedJavaType(introspectedTable
+                    .getBaseRecordType());
+        }
+//        method.addParameter(new Parameter(parameterType,
+//                "record", "@Param(\"record\")")); //$NON-NLS-1$ //$NON-NLS-2$
+//        importedTypes.add(parameterType);
+        
+        method.addParameter(new Parameter(parameterType,
+                "record")); //$NON-NLS-1$ //$NON-NLS-2$
+
+//        FullyQualifiedJavaType exampleType = new FullyQualifiedJavaType(
+//                introspectedTable.getExampleType());
+//        method.addParameter(new Parameter(exampleType,
+//                "example", "@Param(\"example\")")); //$NON-NLS-1$ //$NON-NLS-2$
+//        importedTypes.add(exampleType);
+        
+        FullyQualifiedJavaType exampleType = new FullyQualifiedJavaType(
+                introspectedTable.getExampleType());
+        method.addParameter(new Parameter(exampleType,
+                "example")); //$NON-NLS-1$ //$NON-NLS-2$
+
+//        importedTypes.add(new FullyQualifiedJavaType(
+//                "org.apache.ibatis.annotations.Param")); //$NON-NLS-1$
+
+        context.getCommentGenerator().addGeneralMethodComment(method,
+                introspectedTable);
+
+        addMapperAnnotations(topLevelClass, method);
+        
+        if (context.getPlugins()
+                .clientUpdateByExampleWithBLOBsMethodGenerated(method, topLevelClass,
+                        introspectedTable)) {
+        	topLevelClass.addImportedTypes(importedTypes);
+        	topLevelClass.addMethod(method);
+        }
+    }
+    
     public void addMapperAnnotations(Interface interfaze, Method method) {
         return;
     }
+    
+    public void addMapperAnnotations(TopLevelClass topLevelClass, Method method) {
+        return;
+    }
+    
 }

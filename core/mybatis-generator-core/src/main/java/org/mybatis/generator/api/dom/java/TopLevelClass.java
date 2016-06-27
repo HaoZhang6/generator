@@ -40,7 +40,7 @@ public class TopLevelClass extends InnerClass implements CompilationUnit {
     
     /** The file comment lines. */
     private List<String> fileCommentLines;
-
+    
     /**
      * Instantiates a new top level class.
      *
@@ -73,7 +73,7 @@ public class TopLevelClass extends InnerClass implements CompilationUnit {
         return Collections.unmodifiableSet(importedTypes);
     }
 
-    /**
+	/**
      * Adds the imported type.
      *
      * @param importedType
@@ -130,6 +130,19 @@ public class TopLevelClass extends InnerClass implements CompilationUnit {
         for (String importString : importStrings) {
             sb.append(importString);
             newLine(sb);
+        }
+        
+        if(getIsMapper()){
+        	sb.append("import org.mybatis.spring.SqlSessionTemplate;");
+        	newLine(sb);
+        	sb.append("import org.springframework.beans.factory.annotation.Autowired;");
+        	newLine(sb);
+        	sb.append("import org.springframework.stereotype.Repository;");
+        	newLine(sb);
+        	sb.append("import java.util.HashMap;");
+        	newLine(sb);
+        	sb.append("import java.util.Map;");
+        	newLine(sb);
         }
 
         if (importStrings.size() > 0) {
@@ -196,4 +209,5 @@ public class TopLevelClass extends InnerClass implements CompilationUnit {
     public void addStaticImports(Set<String> staticImports) {
         this.staticImports.addAll(staticImports);
     }
+    
 }

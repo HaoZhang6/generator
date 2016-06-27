@@ -30,6 +30,8 @@ public class JavaClientGeneratorConfiguration extends TypedPropertyHolder {
     private String targetPackage;
     private String implementationPackage;
     private String targetProject;
+	private String readSqlSessionName;
+	private String writeSqlSessionName;
 
     /**
      *  
@@ -86,7 +88,23 @@ public class JavaClientGeneratorConfiguration extends TypedPropertyHolder {
         this.implementationPackage = implementationPackage;
     }
 
-    public void validate(List<String> errors, String contextId) {
+    public String getReadSqlSessionName() {
+		return readSqlSessionName;
+	}
+
+	public String getWriteSqlSessionName() {
+		return writeSqlSessionName;
+	}
+
+	public void setReadSqlSessionName(String readSqlSessionName) {
+		this.readSqlSessionName = readSqlSessionName;
+	}
+
+	public void setWriteSqlSessionName(String writeSqlSessionName) {
+		this.writeSqlSessionName = writeSqlSessionName;
+	}
+
+	public void validate(List<String> errors, String contextId) {
         if (!stringHasValue(targetProject)) {
             errors.add(getString("ValidationError.2", contextId)); //$NON-NLS-1$
         }

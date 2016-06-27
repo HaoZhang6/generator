@@ -23,6 +23,7 @@ import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
+import org.mybatis.generator.api.dom.java.TopLevelClass;
 
 /**
  * 
@@ -65,7 +66,7 @@ public class SelectByExampleWithBLOBsMethodGenerator extends
         method.setName(introspectedTable
                 .getSelectByExampleWithBLOBsStatementId());
         method.addParameter(new Parameter(type, "example")); //$NON-NLS-1$
-
+        
         context.getCommentGenerator().addGeneralMethodComment(method,
                 introspectedTable);
 
@@ -78,8 +79,58 @@ public class SelectByExampleWithBLOBsMethodGenerator extends
             interfaze.addMethod(method);
         }
     }
+    
+    @Override
+    public void addClassElements(TopLevelClass topLevelClass) {
+        Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
+        FullyQualifiedJavaType type = new FullyQualifiedJavaType(
+                introspectedTable.getExampleType());
+        importedTypes.add(type);
+        importedTypes.add(FullyQualifiedJavaType.getNewListInstance());
+
+        Method method = new Method();
+        method.setVisibility(JavaVisibility.PUBLIC);
+
+        FullyQualifiedJavaType returnType = FullyQualifiedJavaType
+                .getNewListInstance();
+        FullyQualifiedJavaType listType;
+        if (introspectedTable.getRules().generateRecordWithBLOBsClass()) {
+            listType = new FullyQualifiedJavaType(introspectedTable
+                    .getRecordWithBLOBsType());
+        } else {
+            // the blob fields must be rolled up into the base class
+            listType = new FullyQualifiedJavaType(introspectedTable
+                    .getBaseRecordType());
+        }
+
+        importedTypes.add(listType);
+        returnType.addTypeArgument(listType);
+        method.setReturnType(returnType);
+        method.setName(introspectedTable
+                .getSelectByExampleWithBLOBsStatementId());
+        method.addParameter(new Parameter(type, "example")); //$NON-NLS-1$
+        
+        method.addBodyLine("return getReadSqlSession().selectList(namespace+\""+introspectedTable.getSelectByExampleWithBLOBsStatementId()+"\",example);");
+
+        context.getCommentGenerator().addGeneralMethodComment(method,
+                introspectedTable);
+
+        addMapperAnnotations(topLevelClass, method);
+        
+        if (context.getPlugins()
+                .clientSelectByExampleWithBLOBsMethodGenerated(method, topLevelClass,
+                        introspectedTable)) {
+        	topLevelClass.addImportedTypes(importedTypes);
+        	topLevelClass.addMethod(method);
+        }
+    }
 
     public void addMapperAnnotations(Interface interfaze, Method method) {
         return;
     }
+    
+    public void addMapperAnnotations(TopLevelClass topLevelClass, Method method) {
+        return;
+    }
+    
 }

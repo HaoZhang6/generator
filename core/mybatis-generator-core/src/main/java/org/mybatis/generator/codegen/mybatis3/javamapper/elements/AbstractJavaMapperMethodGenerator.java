@@ -22,6 +22,7 @@ import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
+import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.codegen.AbstractGenerator;
 import org.mybatis.generator.config.GeneratedKey;
 
@@ -32,6 +33,8 @@ import org.mybatis.generator.config.GeneratedKey;
 public abstract class AbstractJavaMapperMethodGenerator extends
         AbstractGenerator {
     public abstract void addInterfaceElements(Interface interfaze);
+    
+    public abstract void addClassElements(TopLevelClass topLevelClass);
 
     public AbstractJavaMapperMethodGenerator() {
         super();

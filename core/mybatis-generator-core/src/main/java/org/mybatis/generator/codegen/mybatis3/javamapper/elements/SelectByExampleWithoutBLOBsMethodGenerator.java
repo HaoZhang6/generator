@@ -25,6 +25,7 @@ import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
+import org.mybatis.generator.api.dom.java.TopLevelClass;
 
 /**
  * 
@@ -82,7 +83,58 @@ public class SelectByExampleWithoutBLOBsMethodGenerator extends
         }
     }
 
+    @Override
+    public void addClassElements(TopLevelClass topLevelClass) {
+        Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
+        FullyQualifiedJavaType type = new FullyQualifiedJavaType(
+                introspectedTable.getExampleType());
+        importedTypes.add(type);
+        importedTypes.add(FullyQualifiedJavaType.getNewListInstance());
+
+        Method method = new Method();
+        method.setVisibility(JavaVisibility.PUBLIC);
+
+        FullyQualifiedJavaType returnType = FullyQualifiedJavaType
+                .getNewListInstance();
+        FullyQualifiedJavaType listType;
+        if (introspectedTable.getRules().generateBaseRecordClass()) {
+            listType = new FullyQualifiedJavaType(introspectedTable
+                    .getBaseRecordType());
+        } else if (introspectedTable.getRules().generatePrimaryKeyClass()) {
+            listType = new FullyQualifiedJavaType(introspectedTable
+                    .getPrimaryKeyType());
+        } else {
+            throw new RuntimeException(getString("RuntimeError.12")); //$NON-NLS-1$
+        }
+
+        importedTypes.add(listType);
+        returnType.addTypeArgument(listType);
+        method.setReturnType(returnType);
+
+        method.setName(introspectedTable.getSelectByExampleStatementId());
+        method.addParameter(new Parameter(type, "example")); //$NON-NLS-1$
+        
+        method.addBodyLine("return getReadSqlSession().selectList(namespace+\""+introspectedTable.getSelectByExampleStatementId()+"\",example);");
+
+        context.getCommentGenerator().addGeneralMethodComment(method,
+                introspectedTable);
+
+        addMapperAnnotations(topLevelClass, method);
+        
+        if (context.getPlugins()
+                .clientSelectByExampleWithoutBLOBsMethodGenerated(method,
+                		topLevelClass, introspectedTable)) {
+        	topLevelClass.addImportedTypes(importedTypes);
+        	topLevelClass.addMethod(method);
+        }
+    }    
+    
     public void addMapperAnnotations(Interface interfaze, Method method) {
         return;
     }
+    
+    public void addMapperAnnotations(TopLevelClass topLevelClass, Method method) {
+        return;
+    }
+    
 }

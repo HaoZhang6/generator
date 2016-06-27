@@ -23,6 +23,7 @@ import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
+import org.mybatis.generator.api.dom.java.TopLevelClass;
 
 /**
  * 
@@ -71,8 +72,51 @@ public class UpdateByPrimaryKeyWithBLOBsMethodGenerator extends
             interfaze.addMethod(method);
         }
     }
+    
+    @Override
+    public void addClassElements(TopLevelClass topLevelClass) {
+        Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
+        FullyQualifiedJavaType parameterType;
+
+        if (introspectedTable.getRules().generateRecordWithBLOBsClass()) {
+            parameterType = new FullyQualifiedJavaType(introspectedTable
+                    .getRecordWithBLOBsType());
+        } else {
+            parameterType = new FullyQualifiedJavaType(introspectedTable
+                    .getBaseRecordType());
+        }
+
+        importedTypes.add(parameterType);
+
+        Method method = new Method();
+        method.setVisibility(JavaVisibility.PUBLIC);
+        method.setReturnType(FullyQualifiedJavaType.getIntInstance());
+
+        method.setName(introspectedTable
+            .getUpdateByPrimaryKeyWithBLOBsStatementId());
+        method.addParameter(new Parameter(parameterType, "record")); //$NON-NLS-1$
+        
+        method.addBodyLine("return getWriteSqlSession().update(namespace+\""+introspectedTable.getUpdateByPrimaryKeyWithBLOBsStatementId()+"\",record);");
+
+        context.getCommentGenerator().addGeneralMethodComment(method,
+                introspectedTable);
+
+        addMapperAnnotations(topLevelClass, method);
+
+        if (context.getPlugins()
+                .clientUpdateByPrimaryKeyWithBLOBsMethodGenerated(method,
+                		topLevelClass, introspectedTable)) {
+        	topLevelClass.addImportedTypes(importedTypes);
+        	topLevelClass.addMethod(method);
+        }
+    }
 
     public void addMapperAnnotations(Interface interfaze, Method method) {
         return;
     }
+    
+    public void addMapperAnnotations(TopLevelClass topLevelClass, Method method) {
+        return;
+    }
+    
 }

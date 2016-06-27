@@ -23,6 +23,7 @@ import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
+import org.mybatis.generator.api.dom.java.TopLevelClass;
 
 /**
  * 
@@ -61,7 +62,40 @@ public class CountByExampleMethodGenerator extends
         }
     }
 
+    @Override
+    public void addClassElements(TopLevelClass topLevelClass) {
+        FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(
+                introspectedTable.getExampleType());
+
+        Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
+        importedTypes.add(fqjt);
+
+        Method method = new Method();
+        method.setVisibility(JavaVisibility.PUBLIC);
+        method.setReturnType(FullyQualifiedJavaType.getIntInstance());
+        method.setName(introspectedTable.getCountByExampleStatementId());
+        method.addParameter(new Parameter(fqjt, "example")); //$NON-NLS-1$
+        
+        method.addBodyLine("return getReadSqlSession().selectOne(namespace+\""+introspectedTable.getCountByExampleStatementId()+"\",example);");
+        
+        context.getCommentGenerator().addGeneralMethodComment(method,
+                introspectedTable);
+
+        addMapperAnnotations(topLevelClass, method);
+        
+        if (context.getPlugins().clientCountByExampleMethodGenerated(method,
+        		topLevelClass, introspectedTable)) {
+        	topLevelClass.addImportedTypes(importedTypes);
+        	topLevelClass.addMethod(method);
+        }
+    }
+    
     public void addMapperAnnotations(Interface interfaze, Method method) {
         return;
     }
+    
+    public void addMapperAnnotations(TopLevelClass topLevelClass, Method method) {
+        return;
+    }
+    
 }

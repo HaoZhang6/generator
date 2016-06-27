@@ -32,6 +32,10 @@ public class IntrospectedColumn {
     protected String actualColumnName;
 
     protected int jdbcType;
+    
+    protected String dbType;
+    
+    protected int decimalDigits;
 
     protected String jdbcTypeName;
 
@@ -301,4 +305,20 @@ public class IntrospectedColumn {
     public void setSequenceColumn(boolean isSequenceColumn) {
         this.isSequenceColumn = isSequenceColumn;
     }
+
+	public String getDbType() {
+		return dbType;
+	}
+
+	public int getDecimalDigits() {
+		return decimalDigits;
+	}
+
+	public void setDbType(String dbType) {
+		this.dbType = dbType;
+	}
+
+	public void setDecimalDigits(int decimalDigits) {
+		this.decimalDigits = decimalDigits;
+	}
 }
