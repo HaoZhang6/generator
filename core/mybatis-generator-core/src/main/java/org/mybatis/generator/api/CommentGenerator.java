@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@ public interface CommentGenerator {
      * Adds properties for this instance from any properties configured in the
      * CommentGenerator configuration.
      * 
-     * This method will be called before any of the other methods.
+     * <p>This method will be called before any of the other methods.
      * 
      * @param properties
      *            All properties from the configuration
@@ -45,12 +45,11 @@ public interface CommentGenerator {
     void addConfigurationProperties(Properties properties);
 
     /**
-     * This method should add a Javadoc comment to the specified field. The field is related to the specified table and
-     * is used to hold the value of the specified column.
-     * <p>
+     * This method should add a Javadoc comment to the specified field. The field is related to the
+     * specified table and is used to hold the value of the specified column.
      * 
-     * <b>Important:</b> This method should add a the nonstandard JavaDoc tag "@mbggenerated" to the comment. Without
-     * this tag, the Eclipse based Java merge feature will fail.
+     * <p><b>Important:</b> This method should add a the nonstandard JavaDoc tag "@mbg.generated" to
+     * the comment. Without this tag, the Eclipse based Java merge feature will fail.
      *
      * @param field
      *            the field
@@ -59,7 +58,7 @@ public interface CommentGenerator {
      * @param introspectedColumn
      *            the introspected column
      */
-    public void addFieldComment(Field field,
+    void addFieldComment(Field field,
             IntrospectedTable introspectedTable,
             IntrospectedColumn introspectedColumn);
 
@@ -71,7 +70,7 @@ public interface CommentGenerator {
      * @param introspectedTable
      *            the introspected table
      */
-    public void addFieldComment(Field field, IntrospectedTable introspectedTable);
+    void addFieldComment(Field field, IntrospectedTable introspectedTable);
 
     /**
      * Adds a comment for a model class.  The Java code merger should
@@ -79,7 +78,7 @@ public interface CommentGenerator {
      * changes have been made.  So this method will always use the 
      * "do not delete" annotation.
      * 
-     * Because of difficulties with the Java file merger, the default implementation
+     * <p>Because of difficulties with the Java file merger, the default implementation
      * of this method should NOT add comments.  Comments should only be added if
      * specifically requested by the user (for example, by enabling table remark comments).
      *
@@ -88,7 +87,7 @@ public interface CommentGenerator {
      * @param introspectedTable
      *            the introspected table
      */
-    public void addModelClassComment(TopLevelClass topLevelClass,
+    void addModelClassComment(TopLevelClass topLevelClass,
             IntrospectedTable introspectedTable);
 
     /**
@@ -99,7 +98,7 @@ public interface CommentGenerator {
      * @param introspectedTable
      *            the introspected table
      */
-    public void addClassComment(InnerClass innerClass,
+    void addClassComment(InnerClass innerClass,
             IntrospectedTable introspectedTable);
 
     /**
@@ -112,7 +111,7 @@ public interface CommentGenerator {
      * @param markAsDoNotDelete
      *            the mark as do not delete
      */
-    public void addClassComment(InnerClass innerClass,
+    void addClassComment(InnerClass innerClass,
             IntrospectedTable introspectedTable, boolean markAsDoNotDelete);
 
     /**
@@ -123,7 +122,7 @@ public interface CommentGenerator {
      * @param introspectedTable
      *            the introspected table
      */
-    public void addEnumComment(InnerEnum innerEnum,
+    void addEnumComment(InnerEnum innerEnum,
             IntrospectedTable introspectedTable);
 
     /**
@@ -136,7 +135,7 @@ public interface CommentGenerator {
      * @param introspectedColumn
      *            the introspected column
      */
-    public void addGetterComment(Method method,
+    void addGetterComment(Method method,
             IntrospectedTable introspectedTable,
             IntrospectedColumn introspectedColumn);
 
@@ -150,7 +149,7 @@ public interface CommentGenerator {
      * @param introspectedColumn
      *            the introspected column
      */
-    public void addSetterComment(Method method,
+    void addSetterComment(Method method,
             IntrospectedTable introspectedTable,
             IntrospectedColumn introspectedColumn);
 
@@ -162,22 +161,21 @@ public interface CommentGenerator {
      * @param introspectedTable
      *            the introspected table
      */
-    public void addGeneralMethodComment(Method method,
+    void addGeneralMethodComment(Method method,
             IntrospectedTable introspectedTable);
 
     /**
-     * This method is called to add a file level comment to a generated java file. This method could be used to add a
-     * general file comment (such as a copyright notice). However, note that the Java file merge function in Eclipse
-     * does not deal with this comment. If you run the generator repeatedly, you will only retain the comment from the
-     * initial run.
-     * <p>
+     * This method is called to add a file level comment to a generated java file. This method
+     * could be used to add a general file comment (such as a copyright notice). However, note
+     * that the Java file merge function in Eclipse does not deal with this comment. If you run
+     * the generator repeatedly, you will only retain the comment from the initial run.
      * 
-     * The default implementation does nothing.
+     * <p>The default implementation does nothing.
      *
      * @param compilationUnit
      *            the compilation unit
      */
-    public void addJavaFileComment(CompilationUnit compilationUnit);
+    void addJavaFileComment(CompilationUnit compilationUnit);
 
     /**
      * This method should add a suitable comment as a child element of the specified xmlElement to warn users that the
@@ -186,18 +184,18 @@ public interface CommentGenerator {
      * @param xmlElement
      *            the xml element
      */
-    public void addComment(XmlElement xmlElement);
+    void addComment(XmlElement xmlElement);
 
     /**
-     * This method is called to add a comment as the first child of the root element. This method could be used to add a
-     * general file comment (such as a copyright notice). However, note that the XML file merge function does not deal
-     * with this comment. If you run the generator repeatedly, you will only retain the comment from the initial run.
-     * <p>
+     * This method is called to add a comment as the first child of the root element. This method
+     * could be used to add a general file comment (such as a copyright notice). However, note
+     * that the XML file merge function does not deal with this comment. If you run the generator
+     * repeatedly, you will only retain the comment from the initial run.
      * 
-     * The default implementation does nothing.
+     * <p>The default implementation does nothing.
      *
      * @param rootElement
      *            the root element
      */
-    public void addRootComment(XmlElement rootElement);
+    void addRootComment(XmlElement rootElement);
 }

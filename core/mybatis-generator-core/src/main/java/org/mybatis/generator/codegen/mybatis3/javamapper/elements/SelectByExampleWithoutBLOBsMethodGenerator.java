@@ -78,6 +78,7 @@ public class SelectByExampleWithoutBLOBsMethodGenerator extends
         if (context.getPlugins()
                 .clientSelectByExampleWithoutBLOBsMethodGenerated(method,
                         interfaze, introspectedTable)) {
+            addExtraImports(interfaze);
             interfaze.addImportedTypes(importedTypes);
             interfaze.addMethod(method);
         }
@@ -130,7 +131,9 @@ public class SelectByExampleWithoutBLOBsMethodGenerator extends
     }    
     
     public void addMapperAnnotations(Interface interfaze, Method method) {
-        return;
+    }
+
+    public void addExtraImports(Interface interfaze) {
     }
     
     public void addMapperAnnotations(TopLevelClass topLevelClass, Method method) {

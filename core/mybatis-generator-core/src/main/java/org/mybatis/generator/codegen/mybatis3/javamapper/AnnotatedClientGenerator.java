@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ package org.mybatis.generator.codegen.mybatis3.javamapper;
 import java.util.List;
 
 import org.mybatis.generator.api.dom.java.CompilationUnit;
-import org.mybatis.generator.api.dom.java.TopLevelClass;
+import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.codegen.AbstractXmlGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.AbstractJavaMapperMethodGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.annotated.AnnotatedCountByExampleMethodGenerator;
@@ -45,126 +45,132 @@ public class AnnotatedClientGenerator extends JavaMapperGenerator {
     }
 
     @Override
-    protected void addCountByExampleMethod(TopLevelClass topLevelClass) {
+    protected void addCountByExampleMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateCountByExample()) {
             AbstractJavaMapperMethodGenerator methodGenerator = new AnnotatedCountByExampleMethodGenerator();
-            initializeAndExecuteGenerator(methodGenerator, topLevelClass);
+            initializeAndExecuteGenerator(methodGenerator, interfaze);
         }
     }
 
     @Override
-    protected void addDeleteByExampleMethod(TopLevelClass topLevelClass) {
+    protected void addDeleteByExampleMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateDeleteByExample()) {
             AbstractJavaMapperMethodGenerator methodGenerator = new AnnotatedDeleteByExampleMethodGenerator();
-            initializeAndExecuteGenerator(methodGenerator, topLevelClass);
+            initializeAndExecuteGenerator(methodGenerator, interfaze);
         }
     }
 
     @Override
-    protected void addDeleteByPrimaryKeyMethod(TopLevelClass topLevelClass) {
+    protected void addDeleteByPrimaryKeyMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateDeleteByPrimaryKey()) {
             AbstractJavaMapperMethodGenerator methodGenerator = new AnnotatedDeleteByPrimaryKeyMethodGenerator(false);
-            initializeAndExecuteGenerator(methodGenerator, topLevelClass);
+            initializeAndExecuteGenerator(methodGenerator, interfaze);
         }
     }
 
     @Override
-    protected void addInsertMethod(TopLevelClass topLevelClass) {
+    protected void addInsertMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateInsert()) {
             AbstractJavaMapperMethodGenerator methodGenerator = new AnnotatedInsertMethodGenerator(false);
-            initializeAndExecuteGenerator(methodGenerator, topLevelClass);
+            initializeAndExecuteGenerator(methodGenerator, interfaze);
         }
     }
 
     @Override
-    protected void addInsertSelectiveMethod(TopLevelClass topLevelClass) {
+    protected void addInsertSelectiveMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateInsertSelective()) {
             AbstractJavaMapperMethodGenerator methodGenerator = new AnnotatedInsertSelectiveMethodGenerator();
-            initializeAndExecuteGenerator(methodGenerator, topLevelClass);
+            initializeAndExecuteGenerator(methodGenerator, interfaze);
         }
     }
 
     @Override
-    protected void addSelectByExampleWithBLOBsMethod(TopLevelClass topLevelClass) {
+    protected void addSelectByExampleWithBLOBsMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateSelectByExampleWithBLOBs()) {
             AbstractJavaMapperMethodGenerator methodGenerator = new AnnotatedSelectByExampleWithBLOBsMethodGenerator();
-            initializeAndExecuteGenerator(methodGenerator, topLevelClass);
+            initializeAndExecuteGenerator(methodGenerator, interfaze);
         }
     }
 
     @Override
-    protected void addSelectByExampleWithoutBLOBsMethod(TopLevelClass topLevelClass) {
+    protected void addSelectByExampleWithoutBLOBsMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateSelectByExampleWithoutBLOBs()) {
-            AbstractJavaMapperMethodGenerator methodGenerator = new AnnotatedSelectByExampleWithoutBLOBsMethodGenerator();
-            initializeAndExecuteGenerator(methodGenerator, topLevelClass);
+            AbstractJavaMapperMethodGenerator methodGenerator =
+                    new AnnotatedSelectByExampleWithoutBLOBsMethodGenerator();
+            initializeAndExecuteGenerator(methodGenerator, interfaze);
         }
     }
 
     @Override
-    protected void addSelectByPrimaryKeyMethod(TopLevelClass topLevelClass) {
+    protected void addSelectByPrimaryKeyMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateSelectByPrimaryKey()) {
-            AbstractJavaMapperMethodGenerator methodGenerator = new AnnotatedSelectByPrimaryKeyMethodGenerator(false, false);
-            initializeAndExecuteGenerator(methodGenerator, topLevelClass);
+            AbstractJavaMapperMethodGenerator methodGenerator = new AnnotatedSelectByPrimaryKeyMethodGenerator(false,
+                    false);
+            initializeAndExecuteGenerator(methodGenerator, interfaze);
         }
     }
 
     @Override
-    protected void addUpdateByExampleSelectiveMethod(TopLevelClass topLevelClass) {
+    protected void addUpdateByExampleSelectiveMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateUpdateByExampleSelective()) {
             AbstractJavaMapperMethodGenerator methodGenerator = new AnnotatedUpdateByExampleSelectiveMethodGenerator();
-            initializeAndExecuteGenerator(methodGenerator, topLevelClass);
+            initializeAndExecuteGenerator(methodGenerator, interfaze);
         }
     }
 
     @Override
-    protected void addUpdateByExampleWithBLOBsMethod(TopLevelClass topLevelClass) {
+    protected void addUpdateByExampleWithBLOBsMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateUpdateByExampleWithBLOBs()) {
             AbstractJavaMapperMethodGenerator methodGenerator = new AnnotatedUpdateByExampleWithBLOBsMethodGenerator();
-            initializeAndExecuteGenerator(methodGenerator, topLevelClass);
+            initializeAndExecuteGenerator(methodGenerator, interfaze);
         }
     }
 
     @Override
-    protected void addUpdateByExampleWithoutBLOBsMethod(TopLevelClass topLevelClass) {
+    protected void addUpdateByExampleWithoutBLOBsMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateUpdateByExampleWithoutBLOBs()) {
-            AbstractJavaMapperMethodGenerator methodGenerator = new AnnotatedUpdateByExampleWithoutBLOBsMethodGenerator();
-            initializeAndExecuteGenerator(methodGenerator, topLevelClass);
+            AbstractJavaMapperMethodGenerator methodGenerator =
+                    new AnnotatedUpdateByExampleWithoutBLOBsMethodGenerator();
+            initializeAndExecuteGenerator(methodGenerator, interfaze);
         }
     }
 
     @Override
-    protected void addUpdateByPrimaryKeySelectiveMethod(TopLevelClass topLevelClass) {
+    protected void addUpdateByPrimaryKeySelectiveMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateUpdateByPrimaryKeySelective()) {
-            AbstractJavaMapperMethodGenerator methodGenerator = new AnnotatedUpdateByPrimaryKeySelectiveMethodGenerator();
-            initializeAndExecuteGenerator(methodGenerator, topLevelClass);
+            AbstractJavaMapperMethodGenerator methodGenerator =
+                    new AnnotatedUpdateByPrimaryKeySelectiveMethodGenerator();
+            initializeAndExecuteGenerator(methodGenerator, interfaze);
         }
     }
 
     @Override
-    protected void addUpdateByPrimaryKeyWithBLOBsMethod(TopLevelClass topLevelClass) {
+    protected void addUpdateByPrimaryKeyWithBLOBsMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateUpdateByPrimaryKeyWithBLOBs()) {
-            AbstractJavaMapperMethodGenerator methodGenerator = new AnnotatedUpdateByPrimaryKeyWithBLOBsMethodGenerator();
-            initializeAndExecuteGenerator(methodGenerator, topLevelClass);
+            AbstractJavaMapperMethodGenerator methodGenerator =
+                    new AnnotatedUpdateByPrimaryKeyWithBLOBsMethodGenerator();
+            initializeAndExecuteGenerator(methodGenerator, interfaze);
         }
     }
 
     @Override
-    protected void addUpdateByPrimaryKeyWithoutBLOBsMethod(TopLevelClass topLevelClass) {
-        if (introspectedTable.getRules()
-                .generateUpdateByPrimaryKeyWithoutBLOBs()) {
-            AbstractJavaMapperMethodGenerator methodGenerator = new AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator(false);
-            initializeAndExecuteGenerator(methodGenerator, topLevelClass);
+    protected void addUpdateByPrimaryKeyWithoutBLOBsMethod(Interface interfaze) {
+        if (introspectedTable.getRules().generateUpdateByPrimaryKeyWithoutBLOBs()) {
+            AbstractJavaMapperMethodGenerator methodGenerator =
+                    new AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator(false);
+            initializeAndExecuteGenerator(methodGenerator, interfaze);
         }
     }
 
     @Override
     public List<CompilationUnit> getExtraCompilationUnits() {
-    	boolean useLegacyBuilder = false;
-    	
-    	String prop = context.getJavaClientGeneratorConfiguration().getProperty(PropertyRegistry.CLIENT_USE_LEGACY_BUILDER);
-    	if (StringUtility.stringHasValue(prop)) {
-    		useLegacyBuilder = Boolean.valueOf(prop);
-    	}
+        boolean useLegacyBuilder = false;
+
+        String prop = context.getJavaClientGeneratorConfiguration()
+                .getProperty(PropertyRegistry.CLIENT_USE_LEGACY_BUILDER);
+        if (StringUtility.stringHasValue(prop)) {
+            useLegacyBuilder = Boolean.valueOf(prop);
+        }
         SqlProviderGenerator sqlProviderGenerator = new SqlProviderGenerator(useLegacyBuilder);
         sqlProviderGenerator.setContext(context);
         sqlProviderGenerator.setIntrospectedTable(introspectedTable);

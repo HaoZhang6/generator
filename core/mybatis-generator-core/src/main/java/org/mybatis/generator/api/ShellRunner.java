@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -138,7 +138,6 @@ public class ShellRunner {
             return;
         } catch (InterruptedException e) {
             // ignore (will never happen with the DefaultShellCallback)
-            ;
         }
 
         for (String warning : warnings) {
@@ -155,8 +154,8 @@ public class ShellRunner {
 
     private static void usage() {
         String lines = getString("Usage.Lines"); //$NON-NLS-1$
-        int iLines = Integer.parseInt(lines);
-        for (int i = 0; i < iLines; i++) {
+        int intLines = Integer.parseInt(lines);
+        for (int i = 0; i < intLines; i++) {
             String key = "Usage." + i; //$NON-NLS-1$
             writeLine(getString(key));
         }

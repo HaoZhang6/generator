@@ -53,11 +53,12 @@ public class UpdateByPrimaryKeyWithoutBLOBsMethodGenerator extends
         context.getCommentGenerator().addGeneralMethodComment(method,
                 introspectedTable);
 
-        addMapperAnnotations(interfaze, method);
+        addMapperAnnotations(method);
         
         if (context.getPlugins()
                 .clientUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(method,
                         interfaze, introspectedTable)) {
+            addExtraImports(interfaze);
             interfaze.addImportedTypes(importedTypes);
             interfaze.addMethod(method);
         }
@@ -91,8 +92,10 @@ public class UpdateByPrimaryKeyWithoutBLOBsMethodGenerator extends
         }
     }
 
-    public void addMapperAnnotations(Interface interfaze, Method method) {
-        return;
+    public void addMapperAnnotations(Method method) {
+    }
+
+    public void addExtraImports(Interface interfaze) {
     }
     
     public void addMapperAnnotations(TopLevelClass topLevelClass, Method method) {

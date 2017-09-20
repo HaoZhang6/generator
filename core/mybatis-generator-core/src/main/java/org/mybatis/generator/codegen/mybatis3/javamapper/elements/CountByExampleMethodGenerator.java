@@ -47,16 +47,17 @@ public class CountByExampleMethodGenerator extends
 
         Method method = new Method();
         method.setVisibility(JavaVisibility.PUBLIC);
-        method.setReturnType(FullyQualifiedJavaType.getIntInstance());
+        method.setReturnType(new FullyQualifiedJavaType("long")); //$NON-NLS-1$
         method.setName(introspectedTable.getCountByExampleStatementId());
         method.addParameter(new Parameter(fqjt, "example")); //$NON-NLS-1$
         context.getCommentGenerator().addGeneralMethodComment(method,
                 introspectedTable);
 
-        addMapperAnnotations(interfaze, method);
+        addMapperAnnotations(method);
         
         if (context.getPlugins().clientCountByExampleMethodGenerated(method,
                 interfaze, introspectedTable)) {
+            addExtraImports(interfaze);
             interfaze.addImportedTypes(importedTypes);
             interfaze.addMethod(method);
         }
@@ -92,6 +93,13 @@ public class CountByExampleMethodGenerator extends
     
     public void addMapperAnnotations(Interface interfaze, Method method) {
         return;
+    }
+        
+    public void addMapperAnnotations(Method method) {
+    }
+
+    public void addExtraImports(Interface interfaze) {
+
     }
     
     public void addMapperAnnotations(TopLevelClass topLevelClass, Method method) {
