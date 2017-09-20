@@ -1,5 +1,8 @@
 .factorypath
 
+.DS_Store
+.settings/
+
 # /core/
 /core/.project
 /core/.settings
