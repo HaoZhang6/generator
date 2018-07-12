@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ import java.util.Properties;
 
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
+import org.mybatis.generator.api.IntrospectedTable.TargetRuntime;
 import org.mybatis.generator.api.PluginAdapter;
 import org.mybatis.generator.api.dom.OutputUtilities;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
@@ -54,7 +55,7 @@ public class EqualsHashCodePlugin extends PluginAdapter {
     @Override
     public void setProperties(Properties properties) {
         super.setProperties(properties);
-        useEqualsHashCodeFromRoot = isTrue(properties.getProperty("useEqualsHashCodeFromRoot"));
+        useEqualsHashCodeFromRoot = isTrue(properties.getProperty("useEqualsHashCodeFromRoot")); //$NON-NLS-1$
     }
 
     /**
@@ -131,12 +132,15 @@ public class EqualsHashCodePlugin extends PluginAdapter {
         method.setName("equals"); //$NON-NLS-1$
         method.addParameter(new Parameter(FullyQualifiedJavaType
                 .getObjectInstance(), "that")); //$NON-NLS-1$
-        if (introspectedTable.isJava5Targeted()) {
-            method.addAnnotation("@Override"); //$NON-NLS-1$
-        }
+        method.addAnnotation("@Override"); //$NON-NLS-1$
 
-        context.getCommentGenerator().addGeneralMethodComment(method,
-                introspectedTable);
+        if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3_DSQL) {
+            context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable,
+                    topLevelClass.getImportedTypes());
+        } else {
+            context.getCommentGenerator().addGeneralMethodComment(method,
+                    introspectedTable);
+        }
 
         method.addBodyLine("if (this == that) {"); //$NON-NLS-1$
         method.addBodyLine("return true;"); //$NON-NLS-1$
@@ -240,12 +244,15 @@ public class EqualsHashCodePlugin extends PluginAdapter {
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
         method.setName("hashCode"); //$NON-NLS-1$
-        if (introspectedTable.isJava5Targeted()) {
-            method.addAnnotation("@Override"); //$NON-NLS-1$
-        }
+        method.addAnnotation("@Override"); //$NON-NLS-1$
 
-        context.getCommentGenerator().addGeneralMethodComment(method,
-                introspectedTable);
+        if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3_DSQL) {
+            context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable,
+                    topLevelClass.getImportedTypes());
+        } else {
+            context.getCommentGenerator().addGeneralMethodComment(method,
+                    introspectedTable);
+        }
 
         method.addBodyLine("final int prime = 31;"); //$NON-NLS-1$
         method.addBodyLine("int result = 1;"); //$NON-NLS-1$

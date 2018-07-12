@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -67,9 +67,8 @@ public class XmlCodeGenerationTest {
 
     @Parameters
     public static List<GeneratedXmlFile> generateXmlFiles() throws Exception {
-        List<GeneratedXmlFile> generatedFiles = new ArrayList<GeneratedXmlFile>();
+        List<GeneratedXmlFile> generatedFiles = new ArrayList<>();
         generatedFiles.addAll(generateXmlFilesMybatis());
-        generatedFiles.addAll(generateXmlFilesIbatis());
         return generatedFiles;
     }
 
@@ -78,13 +77,8 @@ public class XmlCodeGenerationTest {
         return generateXmlFiles("/scripts/generatorConfig.xml");
     }
 
-    private static List<GeneratedXmlFile> generateXmlFilesIbatis() throws Exception {
-        JavaCodeGenerationTest.createDatabase();
-        return generateXmlFiles("/scripts/ibatorConfig.xml");
-    }
-
     private static List<GeneratedXmlFile> generateXmlFiles(String configFile) throws Exception {
-        List<String> warnings = new ArrayList<String>();
+        List<String> warnings = new ArrayList<>();
         ConfigurationParser cp = new ConfigurationParser(warnings);
         Configuration config = cp.parseConfiguration(JavaCodeGenerationTest.class.getResourceAsStream(configFile));
 
@@ -106,8 +100,8 @@ public class XmlCodeGenerationTest {
 
     public static class TestErrorHandler implements ErrorHandler {
 
-        private List<String> errors = new ArrayList<String>();
-        private List<String> warnings = new ArrayList<String>();
+        private List<String> errors = new ArrayList<>();
+        private List<String> warnings = new ArrayList<>();
 
         @Override
         public void warning(SAXParseException exception) throws SAXException {

@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -74,10 +74,10 @@ public class Method extends JavaElement {
      */
     public Method(String name) {
         super();
-        bodyLines = new ArrayList<String>();
-        typeParameters = new ArrayList<TypeParameter>();
-        parameters = new ArrayList<Parameter>();
-        exceptions = new ArrayList<FullyQualifiedJavaType>();
+        bodyLines = new ArrayList<>();
+        typeParameters = new ArrayList<>();
+        parameters = new ArrayList<>();
+        exceptions = new ArrayList<>();
         this.name = name;
     }
 
@@ -89,10 +89,10 @@ public class Method extends JavaElement {
      */
     public Method(Method original) {
         super(original);
-        bodyLines = new ArrayList<String>();
-        typeParameters = new ArrayList<TypeParameter>();
-        parameters = new ArrayList<Parameter>();
-        exceptions = new ArrayList<FullyQualifiedJavaType>();
+        bodyLines = new ArrayList<>();
+        typeParameters = new ArrayList<>();
+        parameters = new ArrayList<>();
+        exceptions = new ArrayList<>();
         this.bodyLines.addAll(original.bodyLines);
         this.constructor = original.constructor;
         this.exceptions.addAll(original.exceptions);
@@ -102,6 +102,7 @@ public class Method extends JavaElement {
         this.returnType = original.returnType;
         this.isNative = original.isNative;
         this.isSynchronized = original.isSynchronized;
+        this.isDefault = original.isDefault;
     }
 
     /**

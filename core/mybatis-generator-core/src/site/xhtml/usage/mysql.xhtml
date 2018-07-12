@@ -49,13 +49,12 @@ Just specify table names and specify the database in the JDBC URL.</p>
 for tables in the MySql information schemas (sys, information_schema, performance_schema, etc.)  This is
 probably not what you want!  To disable this behavior, add the property "nullCatalogMeansCurrent=true" to
 your JDBC URL.</p>
-<p>For example:
+<p>For example:</p>
 <pre>
     &lt;jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost/my_schema"
             userId="my_user" password="my_password"&gt;
         &lt;property name="nullCatalogMeansCurrent" value=true" /&gt;
     &lt;/jdbcConnection&gt;
 </pre>
-</p>
 </body>
 </html>

@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -75,24 +75,6 @@ public class GeneratedKey {
         return type;
     }
 
-    /**
-     * This method is used by the iBATIS2 generators to know if the XML &lt;selectKey&gt; element should be placed before the
-     * insert SQL statement.
-     *
-     * @return true, if is placed before insert in ibatis2
-     */
-    public boolean isPlacedBeforeInsertInIbatis2() {
-        boolean rc;
-
-        if (stringHasValue(type)) {
-            rc = true;
-        } else {
-            rc = !isIdentity;
-        }
-
-        return rc;
-    }
-
     public String getMyBatis3Order() {
         return isIdentity ? "AFTER" : "BEFORE"; //$NON-NLS-1$ //$NON-NLS-2$
     }
@@ -118,7 +100,7 @@ public class GeneratedKey {
         }
 
         if (stringHasValue(type)
-                && !"pre".equals(type)
+                && !"pre".equals(type) //$NON-NLS-1$
                 && !"post".equals(type)) { //$NON-NLS-1$ //$NON-NLS-2$
             errors.add(getString("ValidationError.15", tableName)); //$NON-NLS-1$
         }

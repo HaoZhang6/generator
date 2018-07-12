@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  *    Copyright 2006-2017 the original author or authors.
+=======
+ *    Copyright 2006-2018 the original author or authors.
+>>>>>>> 9c633470135ff264122125695783521b6b50f483
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -38,7 +42,7 @@ public class SelectAllMethodGenerator extends AbstractJavaMapperMethodGenerator 
 
     @Override
     public void addInterfaceElements(Interface interfaze) {
-        Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
+        Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
         importedTypes.add(FullyQualifiedJavaType.getNewListInstance());
 
         Method method = new Method();
