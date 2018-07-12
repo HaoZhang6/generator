@@ -34,6 +34,7 @@ import org.mybatis.generator.api.dom.java.InnerClass;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
+import org.mybatis.generator.api.dom.java.PrimitiveTypeWrapper;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.codegen.AbstractJavaGenerator;
 import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
@@ -120,6 +121,68 @@ public class ExampleGenerator extends AbstractJavaGenerator {
                 .getBooleanPrimitiveInstance());
         method.setName("isDistinct"); //$NON-NLS-1$
         method.addBodyLine("return distinct;"); //$NON-NLS-1$
+        commentGenerator.addGeneralMethodComment(method, introspectedTable);
+        topLevelClass.addMethod(method);
+
+        // add field, getter, setter for pageSize
+        field = new Field();
+        field.setVisibility(JavaVisibility.PROTECTED);
+        field.setType(PrimitiveTypeWrapper.getIntegerInstance());
+        field.setName("pageSize"); //$NON-NLS-1$
+        commentGenerator.addFieldComment(field, introspectedTable);
+        topLevelClass.addField(field);
+
+        method = new Method();
+        method.setVisibility(JavaVisibility.PUBLIC);
+        method.setName("setPageSize"); //$NON-NLS-1$
+        method.addParameter(new Parameter(PrimitiveTypeWrapper
+                .getIntegerInstance(), "pageSize")); //$NON-NLS-1$
+        method.addBodyLine("this.pageSize = pageSize;"); //$NON-NLS-1$
+        commentGenerator.addGeneralMethodComment(method, introspectedTable);
+        topLevelClass.addMethod(method);
+
+        method = new Method();
+        method.setVisibility(JavaVisibility.PUBLIC);
+        method.setReturnType(PrimitiveTypeWrapper
+                .getIntegerInstance());
+        method.setName("getPageSize"); //$NON-NLS-1$
+        method.addBodyLine("return pageSize;"); //$NON-NLS-1$
+        commentGenerator.addGeneralMethodComment(method, introspectedTable);
+        topLevelClass.addMethod(method);
+        
+        // add field, getter, setter for pageNo
+        field = new Field();
+        field.setVisibility(JavaVisibility.PROTECTED);
+        field.setType(PrimitiveTypeWrapper.getIntegerInstance());
+        field.setName("pageNo"); //$NON-NLS-1$
+        commentGenerator.addFieldComment(field, introspectedTable);
+        topLevelClass.addField(field);
+
+        method = new Method();
+        method.setVisibility(JavaVisibility.PUBLIC);
+        method.setName("setPageNo"); //$NON-NLS-1$
+        method.addParameter(new Parameter(PrimitiveTypeWrapper
+                .getIntegerInstance(), "pageNo")); //$NON-NLS-1$
+        method.addBodyLine("this.pageNo = pageNo;"); //$NON-NLS-1$
+        commentGenerator.addGeneralMethodComment(method, introspectedTable);
+        topLevelClass.addMethod(method);
+
+        method = new Method();
+        method.setVisibility(JavaVisibility.PUBLIC);
+        method.setReturnType(PrimitiveTypeWrapper
+                .getIntegerInstance());
+        method.setName("getPageNo"); //$NON-NLS-1$
+        method.addBodyLine("return pageNo;"); //$NON-NLS-1$
+        commentGenerator.addGeneralMethodComment(method, introspectedTable);
+        topLevelClass.addMethod(method);
+        
+        // add getter for startIndex
+        method = new Method();
+        method.setVisibility(JavaVisibility.PUBLIC);
+        method.setReturnType(PrimitiveTypeWrapper
+                .getIntegerInstance());
+        method.setName("getStartIndex"); //$NON-NLS-1$
+        method.addBodyLine("return (pageNo-1)*pageSize;"); //$NON-NLS-1$
         commentGenerator.addGeneralMethodComment(method, introspectedTable);
         topLevelClass.addMethod(method);
 

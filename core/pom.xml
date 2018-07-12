@@ -18,13 +18,14 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+<!--
   <parent>
     <groupId>org.mybatis</groupId>
     <artifactId>mybatis-parent</artifactId>
     <version>29</version>
     <relativePath />
   </parent>
-
+-->
   <groupId>org.mybatis.generator</groupId>
   <artifactId>mybatis-generator</artifactId>
   <name>MyBatis Generator</name>
@@ -421,5 +422,16 @@
       </build>
     </profile>
   </profiles>
-
+	<distributionManagement>
+		<repository>
+			<id>maven-release</id>
+			<name>Nexus Release Repository</name>
+			<url>http://nexus.billbear.cn/repository/maven-releases/</url>
+		</repository>
+		<snapshotRepository>            	    
+			<id>maven-snapshots</id>
+			<name>Nexus Snapshot Repository</name>
+			<url>http://nexus.billbear.cn/repository/maven-snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
 </project>
