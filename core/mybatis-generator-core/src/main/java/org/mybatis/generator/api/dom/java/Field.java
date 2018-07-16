@@ -23,6 +23,7 @@ public class Field extends JavaElement {
     private String initializationString;
     private boolean isTransient;
     private boolean isVolatile;
+    private String comment;
 
     public Field() {
         // use a default name to avoid NPE
@@ -102,6 +103,8 @@ public class Field extends JavaElement {
         }
 
         sb.append(';');
+        
+        sb.append("//").append(getComment()).append("\n");//add comment
 
         return sb.toString();
     }
@@ -121,4 +124,12 @@ public class Field extends JavaElement {
     public void setVolatile(boolean isVolatile) {
         this.isVolatile = isVolatile;
     }
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
 }

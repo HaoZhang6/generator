@@ -1,5 +1,9 @@
 .factorypath
 
+eclipse/
+.externalToolBuilders/
+maven-eclipse.xml
+
 # /core/
 /core/.project
 /core/.settings

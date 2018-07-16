@@ -142,6 +142,7 @@
     </dependency>
   </dependencies>
 
+<!--
   <distributionManagement>
     <site>
       <id>gh-pages</id>
@@ -149,6 +150,19 @@
       <url>git:ssh://git@github.com/mybatis/generator.git?gh-pages#</url>
     </site>
   </distributionManagement>
+-->
+        <distributionManagement>
+                <repository>
+                        <id>maven-release</id>
+                        <name>Nexus Release Repository</name>
+                        <url>https://nexus.billbear.cn/repository/maven-releases/</url>
+                </repository>
+                <snapshotRepository>
+                        <id>maven-snapshots</id>
+                        <name>Nexus Snapshot Repository</name>
+                        <url>https://nexus.billbear.cn/repository/maven-snapshots/</url>
+                </snapshotRepository>
+        </distributionManagement>
 
   <description>MyBatis Generator - a code generator for MyBatis.</description>
   <scm>

@@ -76,8 +76,10 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
                 new FullyQualifiedJavaType(Object.class.getName())));
         typeMap.put(Types.DATE, new JdbcTypeInformation("DATE", //$NON-NLS-1$
                 new FullyQualifiedJavaType(Date.class.getName())));
-        typeMap.put(Types.DECIMAL, new JdbcTypeInformation("DECIMAL", //$NON-NLS-1$
-                new FullyQualifiedJavaType(BigDecimal.class.getName())));
+//        typeMap.put(Types.DECIMAL, new JdbcTypeInformation("DECIMAL", //$NON-NLS-1$
+//                new FullyQualifiedJavaType(BigDecimal.class.getName())));
+        typeMap.put(Types.DECIMAL, new JdbcTypeInformation("DOUBLE", //$NON-NLS-1$
+                new FullyQualifiedJavaType(Double.class.getName())));        
         typeMap.put(Types.DISTINCT, new JdbcTypeInformation("DISTINCT", //$NON-NLS-1$
                 new FullyQualifiedJavaType(Object.class.getName())));
         typeMap.put(Types.DOUBLE, new JdbcTypeInformation("DOUBLE", //$NON-NLS-1$
