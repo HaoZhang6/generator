@@ -104,7 +104,9 @@ public class Field extends JavaElement {
 
         sb.append(';');
         
-        sb.append("//").append(getComment()).append("\n");//add comment
+        if(comment!=null&&comment.length()>0){
+            sb.append("//").append(getComment()).append("\n");//add comment
+        }    
 
         return sb.toString();
     }
