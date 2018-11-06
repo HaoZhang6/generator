@@ -75,7 +75,7 @@ public class SelectByExampleWithoutBLOBsElementGenerator extends
         ifElement.addElement(new TextElement("order by ${orderByClause}")); //$NON-NLS-1$
         answer.addElement(ifElement);
         
-        addPageQueryElement(answer);
+        addPageQueryInclude(answer);
 
         if (context.getPlugins()
                 .sqlMapSelectByExampleWithoutBLOBsElementGenerated(answer,

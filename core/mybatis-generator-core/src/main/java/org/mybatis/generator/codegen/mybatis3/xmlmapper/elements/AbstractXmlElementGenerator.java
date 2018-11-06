@@ -100,11 +100,10 @@ public abstract class AbstractXmlElementGenerator extends AbstractGenerator {
         return ifElement;
     }
     
-    protected void addPageQueryElement(XmlElement answer){ 
-    	XmlElement ifElement = new XmlElement("if"); //$NON-NLS-1$
-        ifElement.addAttribute(new Attribute("test", "pageNo != null")); //$NON-NLS-1$ //$NON-NLS-2$
-        ifElement.addElement(new TextElement("limit ${startIndex},${pageSize}")); //$NON-NLS-1$
-        answer.addElement(ifElement);
+    protected void addPageQueryInclude(XmlElement answer){ 
+    	XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
+    	includeElement.addAttribute(new Attribute("refid", "Page_Query")); //$NON-NLS-1$ //$NON-NLS-2$
+        answer.addElement(includeElement);
     }
     
 }

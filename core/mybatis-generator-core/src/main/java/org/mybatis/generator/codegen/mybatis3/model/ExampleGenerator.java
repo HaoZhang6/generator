@@ -133,6 +133,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         field.setVisibility(JavaVisibility.PROTECTED);
         field.setType(PrimitiveTypeWrapper.getIntegerInstance());
         field.setName("pageSize"); //$NON-NLS-1$
+        field.setInitializationString("100");
         commentGenerator.addFieldComment(field, introspectedTable);
         topLevelClass.addField(field);
 
@@ -159,6 +160,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         field.setVisibility(JavaVisibility.PROTECTED);
         field.setType(PrimitiveTypeWrapper.getIntegerInstance());
         field.setName("pageNo"); //$NON-NLS-1$
+        field.setInitializationString("1");
         commentGenerator.addFieldComment(field, introspectedTable);
         topLevelClass.addField(field);
 
